@@ -1,0 +1,50 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!--Client-->
+    <changeSet id="v1-create-table-1" author="Shabakhov Eset">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="client"/>
+            </not>
+        </preConditions>
+        <createTable tableName="client">
+            <column name="id" type="bigint" defaultValueSequenceNext="client_seq">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_exist" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <!--Contact-->
+    <changeSet id="v1-create-table-2" author="Shabakhov Eset">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="contact"/>
+            </not>
+        </preConditions>
+        <createTable tableName="contact">
+            <column name="id" type="bigint" defaultValueSequenceNext="contact_seq">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="type_contact" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value_contact" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_contact_client" references="client(id)"/>
+            </column>
+            <column name="is_exist" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

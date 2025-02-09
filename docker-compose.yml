@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres
+    hostname: postgres
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_DB=postgres
+
+
+  crm-app:
+    image: openjdk:17
+    container_name: crm-app
+    ports:
+      - "9500:9500"
+    volumes:
+      - ./target/crm-0.0.1-SNAPSHOT.jar:/opt/app.jar
+    command: java -jar -Ddb.url=jdbc:postgresql://postgres:5432/postgres /opt/app.jar
